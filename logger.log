@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+</log>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+</log>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+</log>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+</log>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2022-06-09T01:11:04</date>
+  <millis>1654755064019</millis>
+  <sequence>0</sequence>
+  <logger>paint.PainT</logger>
+  <level>INFO</level>
+  <class>paint.Log$LogSelection</class>
+  <method>run</method>
+  <thread>19</thread>
+  <message>Rectangle selected for 1607 ms.</message>
+</record>
+<record>
+  <date>2022-06-09T01:11:05</date>
+  <millis>1654755065223</millis>
+  <sequence>1</sequence>
+  <logger>paint.PainT</logger>
+  <level>INFO</level>
+  <class>paint.Log$LogSelection</class>
+  <method>run</method>
+  <thread>20</thread>
+  <message>Ellipse selected for 1304 ms.</message>
+</record>
+<record>
+  <date>2022-06-09T01:11:07</date>
+  <millis>1654755067243</millis>
+  <sequence>2</sequence>
+  <logger>paint.PainT</logger>
+  <level>INFO</level>
+  <class>paint.Log$LogSelection</class>
+  <method>run</method>
+  <thread>21</thread>
+  <message>Triangle selected for 2109 ms.</message>
+</record>
+</log>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2022-06-09T01:15:30</date>
+  <millis>1654755330496</millis>
+  <sequence>0</sequence>
+  <logger>paint.PainT</logger>
+  <level>INFO</level>
+  <class>paint.Log$LogSelection</class>
+  <method>run</method>
+  <thread>19</thread>
+  <message>Rectangle selected for 2815 ms.</message>
+</record>
+</log>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2022-06-09T01:18:44</date>
+  <millis>1654755524794</millis>
+  <sequence>0</sequence>
+  <logger>paint.PainT</logger>
+  <level>INFO</level>
+  <class>paint.Log$LogSelection</class>
+  <method>run</method>
+  <thread>19</thread>
+  <message>Line selected for 2613 ms.</message>
+</record>
+</log>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2022-06-09T01:26:14</date>
+  <millis>1654755974916</millis>
+  <sequence>0</sequence>
+  <logger>paint.PainT</logger>
+  <level>INFO</level>
+  <class>paint.Log$LogSelection</class>
+  <method>run</method>
+  <thread>18</thread>
+  <message>No Tool selected for 3116 ms.</message>
+</record>
+</log>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2022-06-09T01:27:35</date>
+  <millis>1654756055966</millis>
+  <sequence>0</sequence>
+  <logger>paint.PainT</logger>
+  <level>INFO</level>
+  <class>paint.Log$LogSelection</class>
+  <method>run</method>
+  <thread>18</thread>
+  <message>No Tool selected for 2011 ms.</message>
+</record>
+</log>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+</log>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2022-06-09T01:28:48</date>
+  <millis>1654756128781</millis>
+  <sequence>0</sequence>
+  <logger>paint.PainT</logger>
+  <level>INFO</level>
+  <class>paint.Log$LogSelection</class>
+  <method>run</method>
+  <thread>18</thread>
+  <message>No Tool selected for 2512 ms.</message>
+</record>
+</log>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2022-06-09T01:29:30</date>
+  <millis>1654756170649</millis>
+  <sequence>0</sequence>
+  <logger>paint.PainT</logger>
+  <level>INFO</level>
+  <class>paint.Log$LogSelection</class>
+  <method>run</method>
+  <thread>19</thread>
+  <message>No Tool selected for 5727 ms.</message>
+</record>
+<record>
+  <date>2022-06-09T01:29:31</date>
+  <millis>1654756171762</millis>
+  <sequence>1</sequence>
+  <logger>paint.PainT</logger>
+  <level>INFO</level>
+  <class>paint.Log$LogSelection</class>
+  <method>run</method>
+  <thread>20</thread>
+  <message>Line selected for 1207 ms.</message>
+</record>
+</log>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2022-06-09T01:37:07</date>
+  <millis>1654756627901</millis>
+  <sequence>0</sequence>
+  <logger>paint.PainT</logger>
+  <level>INFO</level>
+  <class>paint.Log$LogSelection</class>
+  <method>run</method>
+  <thread>19</thread>
+  <message>No Tool selected for 4617 ms.</message>
+</record>
+<record>
+  <date>2022-06-09T01:37:09</date>
+  <millis>1654756629894</millis>
+  <sequence>1</sequence>
+  <logger>paint.PainT</logger>
+  <level>INFO</level>
+  <class>paint.Log$LogSelection</class>
+  <method>run</method>
+  <thread>20</thread>
+  <message>Line selected for 2009 ms.</message>
+</record>
+<record>
+  <date>2022-06-09T01:37:15</date>
+  <millis>1654756635384</millis>
+  <sequence>2</sequence>
+  <logger>paint.PainT</logger>
+  <level>INFO</level>
+  <class>paint.Log$LogSelection</class>
+  <method>run</method>
+  <thread>21</thread>
+  <message>Square selected for 5525 ms.</message>
+</record>
+</log>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2022-06-09T01:39:32</date>
+  <millis>1654756772688</millis>
+  <sequence>0</sequence>
+  <logger>paint.PainT</logger>
+  <level>INFO</level>
+  <class>paint.Log$LogSelection</class>
+  <method>run</method>
+  <thread>19</thread>
+  <message>No Tool selected for 2710 ms.</message>
+</record>
+<record>
+  <date>2022-06-09T01:39:33</date>
+  <millis>1654756773610</millis>
+  <sequence>1</sequence>
+  <logger>paint.PainT</logger>
+  <level>INFO</level>
+  <class>paint.Log$LogSelection</class>
+  <method>run</method>
+  <thread>20</thread>
+  <message>Rectangle selected for 1004 ms.</message>
+</record>
+</log>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2022-06-09T01:41:05</date>
+  <millis>1654756865879</millis>
+  <sequence>0</sequence>
+  <logger>paint.PainT</logger>
+  <level>INFO</level>
+  <class>paint.Log$OpenLog</class>
+  <method>run</method>
+  <thread>21</thread>
+  <message>1.gif opened.</message>
+</record>
+</log>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2022-06-09T01:42:30</date>
+  <millis>1654756950600</millis>
+  <sequence>0</sequence>
+  <logger>paint.PainT</logger>
+  <level>INFO</level>
+  <class>paint.Log$OpenLog</class>
+  <method>run</method>
+  <thread>21</thread>
+  <message>1.gif opened.</message>
+</record>
+</log>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+</log>

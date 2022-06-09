@@ -68,7 +68,7 @@ public class OpenSave {
                 fileName = file.getName();          
                 fileExtension = fileName.substring(fileName.lastIndexOf(".") + 1, file.getName().length());
                 System.out.println(">> fileExtension " + fileExtension);
-                p.oThread(fileName);
+                Log.oThread(fileName);
                 
 //                tempImage = image;
                 p.iView = new ImageView();
@@ -142,7 +142,7 @@ public class OpenSave {
                         }
                     
                 }
-                p.slThread();
+                Log.slThread(p.outputFile);
             }
         };
         

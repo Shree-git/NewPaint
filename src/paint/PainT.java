@@ -116,7 +116,7 @@ public class PainT extends Application{
     private ScrollPane scroll = new ScrollPane();
 //    DrawingFunc drawingFunc
     CreateMenuBar menu = new CreateMenuBar();
-    EditTools editTool = new EditTools();
+    public EditTools editTool = new EditTools();
 
     /**
      *
@@ -129,19 +129,171 @@ public class PainT extends Application{
     
     
     CheckSelected cS;
-//    DrawingFunc dF;
+//Canvas
+	
+	/**
+	 *
+	 */
+	public Canvas canvas;
+
+	/**
+	 *
+	 */
+	public GraphicsContext globalGC;
+
+	/**
+	 *
+	 */
+	public GraphicsContext graphicsContext;
+
+	/**
+	 *
+	 */
+	public double CANVAS_WIDTH = 1100;
+
+	/**
+	 *
+	 */
+	public double CANVAS_HEIGHT = 750;
+
+	private Canvas layer = new Canvas();
+
+	/**
+	 *
+	 */
+	public int startX;
+
+	/**
+	 *
+	 */
+	public int startY;
+
+	/**
+	 *
+	 */
+	public int endX;
+
+	/**
+	 *
+	 */
+	public int endY;
+
+	/**
+	 *
+	 */
+	public Stack undoStack = new Stack();
+
+	/**
+	 *
+	 */
+	public Stack redoStack = new Stack();
+	/**
+	 *
+	 */
+	public boolean freeLineTrue = false;
+
+	/**
+	 *
+	 */
+	public boolean lineTrue = false;
+
+	/**
+	 *
+	 */
+	public boolean rectangleTrue = false;
+
+	/**
+	 *
+	 */
+	public boolean squareTrue = false;
+
+	/**
+	 *
+	 */
+	public boolean ellipseTrue = false;
+
+	/**
+	 *
+	 */
+	public boolean circleTrue = false;
+
+	/**
+	 *
+	 */
+	public boolean eraserTrue = false;
+
+	/**
+	 *
+	 */
+	public boolean[] shapesBool = new boolean[7];
+
+	/**
+	 *
+	 */
+	public boolean selectTrue = false;
+
+	/**
+	 *
+	 */
+	public boolean moveTrue = false;
+
+	/**
+	 *
+	 */
+	public Pane pane;
+
+	/**
+	 *
+	 */
+	public Rectangle rectangle;
+
+	/**
+	 *
+	 */
+	public Rectangle square;
+
+	/**
+	 *
+	 */
+	public Ellipse ellipse;
+
+
+	public Ellipse circle;
+
+	/**
+	 *
+	 */
+	public Polygon triangle;
+
+	public Polygon polygon;
+
+	public double[] points;
+
+	public double[] pointsY;
+
+	
+	public int count = 0;
+
+	ImageView selectedImg;
+
+	int numberOfSides;
+	Line line;
+
+	public String saveFileExtension;
+	
+	public Log log = new Log();
+	//    DrawingFunc dF;
     @Override
     public void start(Stage stage) throws IOException { 
-        LoggerFunc();
+        log.LoggerFunc();
         //Setting up the scene
         Scene scene = new Scene(myLayout, SCREEN_WIDTH, SCREEN_HEIGHT);
-        scene.getStylesheets().add((PainT.class.getResource("stylesheet.css").toExternalForm())); //
-        
+//        scene.getStylesheets().add((PainT.class.getResource("stylesheet.css").toExternalForm())); //
         
         os = new OpenSave(this);
         draw = new Draw(this);
         
-        //Application funcionality and tools
+        //Application functionality and tools
         menu.createMenu(); //Creates the Menu Bar
         editTool.editTool(); //Contains tools such as color picker and brush width
         
@@ -152,8 +304,8 @@ public class PainT extends Application{
             e.consume();
             closeProgram(stage, ConfirmExit.display("PainT", "Do you want to save changes?"));
         });
-//        drawingFunc = new DrawingFunc(editTool, graphicsContext,canvas , pane, startX, startY, endX, endY, undoStack);
-cS = new CheckSelected(editTool, this);
+//drawingFunc = new DrawingFunc(editTool, graphicsContext,canvas , pane, startX, startY, endX, endY, undoStack);
+        cS = new CheckSelected(editTool);
         canvasFunc();
         
         pane = new Pane(canvas);
@@ -162,13 +314,12 @@ cS = new CheckSelected(editTool, this);
         dLine();
         
       
-         editTool.autosaveBox.setOnAction(e->{
-             if(editTool.autosaveBox.isSelected()){
-                 autosave = new Autosave(10, this);
-                 autosave.setDaemon(true);
-            autosave.start();
-            
-             }
+        editTool.autosaveBox.setOnAction(e->{
+	         if(editTool.autosaveBox.isSelected()){
+	             autosave = new Autosave(10, this);
+	             autosave.setDaemon(true);
+	             autosave.start();
+	         }
          });
             
 //            addThreadsToPool();
@@ -272,171 +423,7 @@ cS = new CheckSelected(editTool, this);
         });    
     }
     
-    private static final Logger logger = Logger.getLogger(PainT.class.getName());
-
-    /**
-     *
-     * 
-     */
-    public void LoggerFunc() throws IOException{
-        // Construct a default FileHandler.
-      // "%t" denotes the system temp directory, kept in environment variable "tmp"
-      Handler fh = new FileHandler("D:/NetBeans Projects/PainT/src/paint/logger.log", true);  // append is true
-//    fh.setFormatter(new SimpleFormatter());  // Set the log format
-      // Add the FileHandler to the logger.
-      logger.addHandler(fh);
-      // Set the logger level to produce logs at this level and above.
-      logger.setLevel(Level.FINE);
-       
-    }
-    
-    /**
-     *
-     */
-    public class OpenLog implements Runnable{
-        String fileName;
-
-        /**
-         *
-         * @param fileName
-         */
-        public OpenLog(String fileName){
-            this.fileName = fileName;
-        }
-
-        @Override
-        public void run() {
-           
-            while(fileName == null){
-                try{
-                    Thread.sleep(1000);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(PainT.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-           
-            logger.info(fileName + " opened.");
-        }   
-    }
-    
-    /**
-     *
-     * 
-     */
-    public void oThread(String fileName){
-        Thread openLog = new Thread(new OpenLog(fileName));
-        openLog.start();
-    }
-    
-    /**
-     *
-     */
-    public void sThread(){
-        autosave.interrupt();
-        autosave = new Autosave(10, PainT.this);
-        autosave.start();
-    }
-    
-    /**
-     *
-     */
-    public void slThread(){
-        Thread saveLog = new Thread(new PainT.SaveLog(outputFile.getName()));
-                saveLog.start();
-    }
-    
-    /**
-     *
-     */
-    public class SaveLog implements Runnable{
-        String fileName;
-
-        /**
-         *
-         * @param fileName = Name of the file
-         */
-        public SaveLog(String fileName){
-            this.fileName = fileName;
-        }
-
-        @Override
-        public void run() {
-           
-            while(fileName == null){
-                try{
-                    Thread.sleep(1000);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(PainT.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-           
-            logger.info(fileName + " saved.");
-        }
-        
-        
-    }
-    
     //Canvas
-
-    /**
-     *
-     */
-    public Canvas canvas;
-
-    /**
-     *
-     */
-    public GraphicsContext globalGC;
-
-    /**
-     *
-     */
-    public GraphicsContext graphicsContext;
-
-    /**
-     *
-     */
-    public double CANVAS_WIDTH = 1100;
-
-    /**
-     *
-     */
-    public double CANVAS_HEIGHT = 750;
-    private Canvas layer = new Canvas();
-    
-    /**
-     *
-     */
-    public int startX,
-
-    /**
-     *
-     */
-    startY,
-
-    /**
-     *
-     */
-    endX,
-
-    /**
-     *
-     */
-    endY;
-    
-    /**
-     *
-     */
-    public Stack undoStack = new Stack();
-
-    /**
-     *
-     */
-    public Stack redoStack = new Stack();
-    
-    /**
-     *
-     */
     public void canvasFunc(){
         createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT); //Creates a canvas
         
@@ -522,15 +509,7 @@ cS = new CheckSelected(editTool, this);
         });
     }
     
-    /**
-     *
-     * @param selectedTool = Tool that's selected
-     */
-    public void tLogS(String selectedTool){
-            Thread logSelection = new Thread(new LogSelection(selectedTool, logger, cS));
-            logSelection.setDaemon(true);
-            logSelection.start();
-    }
+  
 
     
 
@@ -555,110 +534,12 @@ cS = new CheckSelected(editTool, this);
                 height);  //height of the rectangle
     }
     
-    /**
-     *
-     */
-    public boolean freeLineTrue = false;
-
-    /**
-     *
-     */
-    public boolean lineTrue = false;
-
-    /**
-     *
-     */
-    public boolean rectangleTrue = false;
-
-    /**
-     *
-     */
-    public boolean squareTrue = false;
-
-    /**
-     *
-     */
-    public boolean ellipseTrue = false;
-
-    /**
-     *
-     */
-    public boolean circleTrue = false;
-
-    /**
-     *
-     */
-    public boolean eraserTrue = false;
-
-    /**
-     *
-     */
-    public boolean[] shapesBool = new boolean[7];
-
-    /**
-     *
-     */
-    public boolean selectTrue = false;
-
-    /**
-     *
-     */
-    public boolean moveTrue = false;
+    public void sThread(){
+        autosave.interrupt();
+        autosave = new Autosave(10, PainT.this);
+        autosave.start();
+    }
     
-    /**
-     *
-     */
-    public Pane pane;
-    
-    /**
-     *
-     */
-    public Rectangle rectangle;
-
-    /**
-     *
-     */
-    public Rectangle square;
-
-    /**
-     *
-     */
-    public Ellipse ellipse;
-
-    /**
-     *
-     */
-    public Ellipse circle;
-
-    /**
-     *
-     */
-    public Polygon triangle;
-
-    /**
-     *
-     */
-    public Polygon polygon;
-
-    /**
-     *
-     */
-    public double[] points;
-
-    /**
-     *
-     */
-    public double[] pointsY;
-
-    /**
-     *
-     */
-    public int count = 0;
-    
-    ImageView selectedImg;
-     int numberOfSides;
-    //Brush
-
     /**
      *
      */
@@ -1032,7 +913,7 @@ cS = new CheckSelected(editTool, this);
     public void colorGrabber(){
         
     }
-    Line line;
+    
     
     
   
@@ -1139,11 +1020,6 @@ cS = new CheckSelected(editTool, this);
     private class Delta { double x, y; }
   }
   
-    /**
-     *
-     */
-    public String saveFileExtension;
-    
     /**
      *
      * @param stage

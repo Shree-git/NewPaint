@@ -81,17 +81,6 @@ public class Draw {
         
         graphicsContext = p.graphicsContext;
         graphicsContext = canvas.getGraphicsContext2D();
-        /*Canvas tempCanvas = new Canvas();
-        graphicsContext = canvas.getGraphicsContext2D();
-        GraphicsContext tempGc = graphicsContext;
-//        
-//        graphicsContext.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-//        graphicsContext.fillRect(0,0,canvas.getWidth(),canvas.getHeight());
-        
-        graphicsContext.setStroke(editTool.colorPicker.getValue());
-        graphicsContext.setLineWidth(editTool.lineWidth);
-        graphicsContext.strokeLine(startX, startY, endX, endY);
-        graphicsContext = tempGc;*/
         
        graphicsContext.strokeLine(startX, startY, endX, endY);
         
