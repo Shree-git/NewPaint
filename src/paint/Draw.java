@@ -48,7 +48,7 @@ public class Draw {
         triangle = p.triangle;
         ellipse = p.ellipse;
         circle = p.circle;
-        rectangle = p.rectangle;
+//        rectangle = p.rectangle.rect;
         selectedImg = p.selectedImg;
         undoStack = p.undoStack;
        
@@ -79,7 +79,7 @@ public class Draw {
     public void paintLine(){
         init();
         
-        graphicsContext = p.graphicsContext;
+//        graphicsContext = p.graphicsContext;
         graphicsContext = canvas.getGraphicsContext2D();
         
        graphicsContext.strokeLine(startX, startY, endX, endY);

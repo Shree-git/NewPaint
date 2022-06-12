@@ -35,11 +35,11 @@ import javafx.scene.text.TextAlignment;
 public class EditTools {
     //EditTools
     public TextField widthEdit;
-    public int lineWidth = 5;
+    public static int lineWidth = 5;
     public Label strokeLabel;
     public Label fillLabel;
-    public ColorPicker colorPicker;
-    public ColorPicker fillPicker;
+    public static ColorPicker colorPicker;
+    public static ColorPicker fillPicker;
     public Label sliderLabel;
     public Slider slider;
     public int s_MinValue = 1, s_MaxValue = 10;
@@ -241,14 +241,8 @@ public class EditTools {
         zoomOut = new Button("-");
         zoomIn = new Button("+");
         //Sets property for the toolbar
-//        editToolsBox.setMinHeight(40);
-//        editToolsBox.setMaxHeight(40);
         editToolsBox.getChildren().add(0, toolsGrid);
         editToolsBox.getChildren().add(1, fssGrid);
-//        editToolsBox.getChildren().add(2, fillBox);
-//        editToolsBox.getChildren().add(3, fillPicker);
-//        editToolsBox.getChildren().add(4, slider); 
-//        editToolsBox.getChildren().add(3, sliderBox);
         editToolsBox.getChildren().add(2, colorGrabberTool);
         editToolsBox.getChildren().add(3, eraserTool);
         editToolsBox.getChildren().add(4, undoTool);
