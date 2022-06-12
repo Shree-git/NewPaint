@@ -5,7 +5,6 @@
  */
 package paint;
 
-import com.sun.corba.se.spi.ior.Writeable;
 import java.awt.Desktop;
 import javafx.scene.image.Image;
 import java.awt.image.BufferedImage;
@@ -246,11 +245,13 @@ public class PainT extends Application{
 	 *
 	 */
 	public RectTool rectangle;
+	
+	public SelectTool selectRect;
 
 	/**
 	 *
 	 */
-	public RectTool square;
+	public SquareTool square;
 
 	/**
 	 *
@@ -429,6 +430,7 @@ public class PainT extends Application{
         
         cS.checkTrue();
         editTool.pencilTool.setOnAction((ActionEvent event) -> {
+        	System.out.println(event);
             cS.checkTrue();
         });
         
@@ -508,10 +510,6 @@ public class PainT extends Application{
             System.out.println("redone");
         });
     }
-    
-  
-
-    
 
     /**
      * Takes in width and height and creates a canvas
@@ -548,19 +546,14 @@ public class PainT extends Application{
         
         //Handles mouse events
         canvas.addEventHandler(MouseEvent.MOUSE_PRESSED, (MouseEvent e) -> {
-//        canvasPane.addEventHandler(MouseEvent.MOUSE_PRESSED, (MouseEvent e)->{
             graphicsContext.setStroke(editTool.colorPicker.getValue()); //Sets the color for the brush
             graphicsContext.setLineWidth(editTool.slider.getValue()); //Sets line width
             graphicsContext.setFill(editTool.fillPicker.getValue());
             if(editTool.pencilTool.isSelected()){
-                
-                
                 graphicsContext.beginPath();
                 graphicsContext.moveTo(e.getX(), e.getY());
                 graphicsContext.stroke();
             }else if(editTool.eraserTool.isSelected()){
-                
-                
                 graphicsContext.beginPath();
                 graphicsContext.moveTo(e.getX(), e.getY());
                 graphicsContext.setStroke(Color.WHITE);
@@ -574,7 +567,7 @@ public class PainT extends Application{
                 rectangle.style();
                 pane.getChildren().add(rectangle.rect);
             }else if(editTool.squareTool.isSelected()){
-                square = new RectTool(graphicsContext, e.getX(), e.getY());
+                square = new SquareTool(graphicsContext, e.getX(), e.getY());
                 square.style();       
                 pane.getChildren().add(square.rect);
               
@@ -587,7 +580,6 @@ public class PainT extends Application{
                 
                 startX = (int)e.getX();
                 startY = (int)e.getY();
-                System.out.println("Mouse pressed");
             }else if(editTool.circleTool.isSelected()){
                 circle = new Ellipse(e.getX(), e.getY(), 0, 0);
                 circle.setStrokeWidth(editTool.lineWidth);
@@ -599,9 +591,9 @@ public class PainT extends Application{
                 startY = (int)e.getY();
                 System.out.println("Mouse pressed");
             }else if(editTool.selectTool.isSelected()){
-                rectangle = new RectTool(graphicsContext, e.getX(), e.getY());
-                rectangle.style(1, Color.BLACK, Color.TRANSPARENT);
-                pane.getChildren().add(rectangle.rect);
+                selectRect = new SelectTool(graphicsContext, e.getX(), e.getY());
+                selectRect.style(1, Color.BLACK, Color.TRANSPARENT);
+                pane.getChildren().add(selectRect.rect);
             }else if(editTool.triangleTool.isSelected()){
                 triangle = new Polygon();
                 triangle.getPoints().setAll(e.getX(),e.getY());
@@ -623,35 +615,28 @@ public class PainT extends Application{
                     numberOfSides--;
                     System.out.println(pointsY[count - 1]);
                 }
-                 if(numberOfSides == 0){
-                     System.out.println("Should execute polygon");
-                     graphicsContext.setLineWidth(editTool.lineWidth);
-                    graphicsContext.setStroke(editTool.colorPicker.getValue());
-                    graphicsContext.setFill(editTool.fillPicker.getValue());
-                    graphicsContext.strokePolygon(points, pointsY, points.length);
-                    graphicsContext.fillPolygon(points, pointsY, points.length);
+	            if(numberOfSides == 0){
+	                System.out.println("Should execute polygon");
+	                graphicsContext.setLineWidth(editTool.lineWidth);
+	                graphicsContext.setStroke(editTool.colorPicker.getValue());
+	                graphicsContext.setFill(editTool.fillPicker.getValue());
+	                graphicsContext.strokePolygon(points, pointsY, points.length);
+	                graphicsContext.fillPolygon(points, pointsY, points.length);
                     
-                }
-                
-                
-                
-                
-                
+                }  
             }else if(editTool.moveTool.isSelected()){
                 if(selectedImg != null){
                 selectedImg.setX(e.getX());
                 selectedImg.setY(e.getY());
                 pane.getChildren().add(selectedImg);
                 graphicsContext.setFill(Color.WHITE);
-                graphicsContext.fillRect(rectangle.rect.getX(), rectangle.rect.getY(), rectangle.rect.getWidth(), rectangle.rect.getHeight());
+                graphicsContext.fillRect(selectRect.rect.getX(), selectRect.rect.getY(), selectRect.rect.getWidth(), selectRect.rect.getHeight());
                 }
             }else if(editTool.copyTool.isSelected()){
                 if(selectedImg != null){
                 selectedImg.setX(e.getX());
                 selectedImg.setY(e.getY());
                 pane.getChildren().add(selectedImg);
-//                graphicsContext.setFill(Color.WHITE);
-//                graphicsContext.fillRect(rectangle.getX(), rectangle.getY(), rectangle.getWidth(), rectangle.getHeight());
                 }
             }else if(editTool.emojiTool.isSelected()){
                 ImageView emoView = (ImageView)editTool.emojiList.getValue();
@@ -662,7 +647,6 @@ public class PainT extends Application{
         });
         
         canvas.addEventHandler(MouseEvent.MOUSE_DRAGGED, (MouseEvent e) -> {
-//        canvasPane.addEventHandler(MouseEvent.MOUSE_DRAGGED, (MouseEvent e)->{
             if(editTool.pencilTool.isSelected()){
             graphicsContext.lineTo(e.getX(), e.getY());
             graphicsContext.stroke();
@@ -676,13 +660,11 @@ public class PainT extends Application{
             graphicsContext.beginPath();
             graphicsContext.moveTo(e.getX(), e.getY());
             }else if (editTool.lineTool.isSelected()){
-//                 line.setEndX(e.getX());
-//                 line.setEndY(e.getY());  
             	line.mouseDrag(e.getX(), e.getY());
             }else if (editTool.rectangleTool.isSelected()){
                 rectangle.mouseDrag(e.getX(), e.getY()); 
             }else if (editTool.squareTool.isSelected()){
-                square.dragSquare(e.getX(), e.getY()); 
+                square.mouseDrag(e.getX(), e.getY()); 
             }else if (editTool.ellipseTool.isSelected()){
                 double tempX;
                 double tempY;
@@ -690,13 +672,12 @@ public class PainT extends Application{
                     tempX = e.getX() - startX;
                 }else{
                     tempX = startX - e.getX();
-//                    ellipse.setCenterX(e.getX());
                 }
                 if(e.getY() - startY >= 0){
                     tempY = e.getY() - startY;
                 }else{
                     tempY = startY - e.getY();
-//                    ellipse.setCenterY(e.getY());
+
                 }
                     
                     ellipse.setRadiusX(tempX);
@@ -707,15 +688,12 @@ public class PainT extends Application{
                 if(e.getX() - startX >= 0){
                     tempX = e.getX() - startX;
                 }else{
-                    tempX = startX - e.getX();
-//                    circle.setCenterX(e.getX());
+                    tempX = startX - e.getX();            
                 }
-                
-                    
-                    circle.setRadiusX(tempX);
-                    circle.setRadiusY(tempX);  
+                circle.setRadiusX(tempX);
+                circle.setRadiusY(tempX);  
             }else if (editTool.selectTool.isSelected()){
-                rectangle.mouseDrag(e.getX(), e.getY());  
+            	selectRect.mouseDrag(e.getX(), e.getY());  
             }else if (editTool.triangleTool.isSelected()){
                 double tempX;
                 double tempY;
@@ -729,9 +707,7 @@ public class PainT extends Application{
                     tempY = e.getY();
                 }else{
                     tempY = e.getY();
-//                    rectangle.setY(e.getY());
                 }
-                    
                     triangle.getPoints().setAll((double)startX, (double)startY, (double)startX, tempY, tempX, tempY );
             }else if(editTool.moveTool.isSelected()){
                 if(selectedImg != null){
@@ -750,7 +726,6 @@ public class PainT extends Application{
         });
 
         canvas.addEventHandler(MouseEvent.MOUSE_RELEASED, (MouseEvent e) -> {
-//        canvasPane.addEventHandler(MouseEvent.MOUSE_RELEASED, (MouseEvent e)->{
             if(editTool.pencilTool.isSelected()){
             graphicsContext.lineTo(e.getX(), e.getY());
             graphicsContext.stroke();
@@ -761,12 +736,6 @@ public class PainT extends Application{
             graphicsContext.closePath();
             }else if(editTool.lineTool.isSelected()){
                 pane.getChildren().remove(line.line);
-//                graphicsContext.lineTo(e.getX(), e.getY());
-//                graphicsContext.stroke();
-//                graphicsContext.closePath();
-//                endX = (int)e.getX();
-//                endY = (int)e.getY();
-//                draw.paintLine();
                 line.mouseRelease(e.getX(), e.getY());
             }
             else{
@@ -780,20 +749,19 @@ public class PainT extends Application{
                     pane.getChildren().remove(rectangle.rect);
                     
                 }else if(editTool.squareTool.isSelected()){
-                    draw.paintSquare();
+                    square.mouseRelease(e.getX(), e.getY());
                     pane.getChildren().remove(square.rect);
                     
                 }else if(editTool.ellipseTool.isSelected()){
                     draw.paintEllipse();
                     pane.getChildren().remove(ellipse);
-                    
                 }else if(editTool.circleTool.isSelected()){
                     draw.paintCircle();
                     pane.getChildren().remove(circle);
                     
                 }else if(editTool.selectTool.isSelected()){
-                    selectedImg = rectangle.mouseReleaseSelect(e.getX(), e.getY(), (Image)undoStack.peek());          
-                    pane.getChildren().remove(rectangle.rect);
+                    selectedImg = selectRect.mouseRelease(e.getX(), e.getY(), (Image)undoStack.peek());          
+                    pane.getChildren().remove(selectRect.rect);
                 }else if(editTool.triangleTool.isSelected()){
                     draw.paintTriangle();
                     pane.getChildren().remove(triangle);

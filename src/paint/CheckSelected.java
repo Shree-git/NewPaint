@@ -21,6 +21,9 @@ public class CheckSelected {
      * Shows which tool is selected based on the toggle selects of the buttons.
      */
     public void checkTrue(){
+//    	System.out.println(editTool.toggleGroup.getSelectedToggle().hashCode());
+//    	System.out.println(editTool.toggleGroup.getSelectedToggle().equals(editTool.pencilTool));
+    	
         if(editTool.pencilTool.isSelected()){
             selectedTool = "Free line selected";
         }else if(editTool.lineTool.isSelected()){

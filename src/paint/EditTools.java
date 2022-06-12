@@ -6,6 +6,8 @@
 package paint;
 
 import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -224,6 +226,10 @@ public class EditTools {
         toolsGrid.add(circleTool, 2, 1);
         toolsGrid.add(triangleTool, 0, 2);
         toolsGrid.add(polygonTool, 1, 2);
+        
+        System.out.println(drawTools.getItems());
+       
+
         
         //Button Event Handler
         VBox fillBox = new VBox();
