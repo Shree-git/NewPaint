@@ -21,7 +21,7 @@ import javafx.scene.shape.Rectangle;
  * @author shree
  */
 public class Draw {
-    public PainT p;
+    public DrawShapes p;
     GraphicsContext graphicsContext;
     int endX, endY, startX, startY;
     Polygon triangle;
@@ -32,7 +32,7 @@ public class Draw {
     ImageView selectedImg;
     Stack undoStack;
     
-    public Draw(PainT paint){
+    public Draw(DrawShapes paint){
         p = paint;
         init();
     }
@@ -45,9 +45,8 @@ public class Draw {
         startX = p.startX;
         startY = p.startY;
         
-        triangle = p.triangle;
-        ellipse = p.ellipse;
-        circle = p.circle;
+//        triangle = p.triangle;
+  
 //        rectangle = p.rectangle.rect;
         selectedImg = p.selectedImg;
         undoStack = p.undoStack;

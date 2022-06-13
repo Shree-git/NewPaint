@@ -50,7 +50,7 @@ public class CheckSelected {
         }else if(editTool.triangleTool.isSelected()){
             selectedTool = "Triangle selected";
         }else if(editTool.polygonTool.isSelected()){
-            selectedTool = "Polygon selected";
+            selectedTool = "Polygon Tool selected";
         }else{
             selectedTool = "No Tool selected";
         }
