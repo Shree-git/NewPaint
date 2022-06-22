@@ -564,6 +564,7 @@ public class PainT extends Application{
                 break;
             case "dontSave":
 //                stage.close();
+            
                 break;
             case "cancel":
                 break;
@@ -577,8 +578,6 @@ public class PainT extends Application{
      */
     public static void main(String[] args) {
 //        PainT paint = new PainT();
-    
-      
         launch(args);
     }
     
