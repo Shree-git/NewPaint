@@ -1,6 +1,7 @@
-package paint;
+package tools;
 
 import javafx.scene.shape.Rectangle;
+import paint.EditTools;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.canvas.Canvas;
@@ -12,7 +13,7 @@ import javafx.scene.image.WritableImage;
 
 
 public class RectTool {
-	Rectangle rect;
+	public Rectangle rect;
 	GraphicsContext ctx;
 	int startX;
 	int startY;

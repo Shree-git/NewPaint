@@ -1,12 +1,13 @@
-package paint;
+package tools;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
+import paint.EditTools;
 
 public class EllipseTool {
 	
-	Ellipse ellipse;
+	public Ellipse ellipse;
 	GraphicsContext ctx;
 	int startX;
 	int startY;

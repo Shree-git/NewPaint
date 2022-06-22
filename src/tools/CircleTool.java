@@ -1,4 +1,4 @@
-package paint;
+package tools;
 
 import javafx.scene.canvas.GraphicsContext;
 

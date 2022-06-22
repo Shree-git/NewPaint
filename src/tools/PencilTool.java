@@ -1,7 +1,8 @@
-package paint;
+package tools;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import paint.EditTools;
 
 public class PencilTool {
 	GraphicsContext graphicsContext;

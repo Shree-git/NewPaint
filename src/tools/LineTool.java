@@ -1,6 +1,7 @@
-package paint;
+package tools;
 
 import javafx.scene.shape.Line;
+import paint.EditTools;
 import javafx.scene.layout.Pane;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -8,7 +9,7 @@ import javafx.scene.input.MouseEvent;
 
 
 public class LineTool {
-	Line line;
+	public Line line;
 	GraphicsContext ctx;
 	int startX;
 	int startY;

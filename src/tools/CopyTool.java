@@ -1,12 +1,12 @@
-package paint;
+package tools;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
 
 public class CopyTool {
-	ImageView selectedImg;
-	GraphicsContext ctx;
+	public ImageView selectedImg;
+	public GraphicsContext ctx;
 	int startX;
 	int startY;
 	int endX;

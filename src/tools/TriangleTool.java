@@ -1,12 +1,13 @@
-package paint;
+package tools;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
+import paint.EditTools;
 
 public class TriangleTool {
 	GraphicsContext ctx;
-	Polygon triangle;
+	public Polygon triangle;
 	int startX;
 	int startY;
 	int endX;

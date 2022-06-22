@@ -1,4 +1,4 @@
-package paint;
+package tools;
 
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -9,6 +9,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import paint.EditTools;
 
 public class PolygonTool {
 	public double[] points;

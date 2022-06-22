@@ -11,6 +11,18 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Polygon;
+import tools.CircleTool;
+import tools.CopyTool;
+import tools.EllipseTool;
+import tools.EraserTool;
+import tools.LineTool;
+import tools.MoveTool;
+import tools.PencilTool;
+import tools.PolygonTool;
+import tools.RectTool;
+import tools.SelectTool;
+import tools.SquareTool;
+import tools.TriangleTool;
 
 public class DrawShapes {
 	Canvas canvas;
