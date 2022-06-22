@@ -29,7 +29,7 @@ public class DrawShapes {
 	GraphicsContext graphicsContext;
 	Pane pane;
 	ImageView selectedImg;
-	Draw draw;
+
 	Stack undoStack;
 	
 	public PencilTool pencil;
@@ -51,11 +51,10 @@ public class DrawShapes {
 	public int endX;
 	public int endY;
 	
-	public DrawShapes(Canvas canvas, Pane pane, Draw draw, Stack undoStack) {
+	public DrawShapes(Canvas canvas, Pane pane, Stack undoStack) {
 		this.canvas = canvas;
 		this.graphicsContext = canvas.getGraphicsContext2D();
 		this.pane = pane;
-		this.draw = new Draw(this);
 		this.undoStack = undoStack;
 		polyTool();
 	}

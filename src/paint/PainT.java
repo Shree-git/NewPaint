@@ -110,7 +110,6 @@ public class PainT extends Application{
     public StackPane canvasPane = new StackPane();
     Thread autosave;
     OpenSave os;
-    Draw draw;
     CheckSelected cS;
 	public Canvas canvas;
 	public GraphicsContext globalGC;
@@ -160,7 +159,7 @@ public class PainT extends Application{
         
         pane = new Pane(canvas);
         
-        drawShapes = new DrawShapes(canvas, pane, draw, undoStack);
+        drawShapes = new DrawShapes(canvas, pane, undoStack);
         drawShapes.drawShape();
         
         editTool.autosaveBox.setOnAction(e->{
