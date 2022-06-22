@@ -29,7 +29,6 @@ public class Autosave extends Thread{
         editTool = paint.editTool;
 //        setDaemon(true);  
     }
-    
     public void stopThread(){
         flag = false;
     }
@@ -39,7 +38,7 @@ public class Autosave extends Thread{
     @Override
     public void run() {
 //        lock.lock();
-boolean isTrue;
+    	boolean isTrue;
         isTrue = editTool.autosaveBox.isSelected();
         while(isTrue && !Thread.interrupted()){
         try{
