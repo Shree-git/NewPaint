@@ -49,10 +49,10 @@ public class OpenSave {
     //EventHandler for menu
     public void eventHandler(Stage stage){
         FileChooser.ExtensionFilter extJPG = new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.jpg");
-                FileChooser.ExtensionFilter extPNG = new FileChooser.ExtensionFilter("PNG files (*.png)", "*.png");
-                FileChooser.ExtensionFilter extGIF = new FileChooser.ExtensionFilter("GIF files (*.gif)", "*.gif");
-                FileChooser.ExtensionFilter allFilter = new FileChooser.ExtensionFilter("All files", "*.*");
-                p.fileChooser.getExtensionFilters().addAll(allFilter, extJPG, extPNG, extGIF);
+    	FileChooser.ExtensionFilter extPNG = new FileChooser.ExtensionFilter("PNG files (*.png)", "*.png");
+        FileChooser.ExtensionFilter extGIF = new FileChooser.ExtensionFilter("GIF files (*.gif)", "*.gif");
+        FileChooser.ExtensionFilter allFilter = new FileChooser.ExtensionFilter("All files", "*.*");
+        p.fileChooser.getExtensionFilters().addAll(allFilter, extJPG, extPNG, extGIF);
         //Handles the event when the user presses Open File.
         EventHandler<ActionEvent> openClick = new EventHandler<ActionEvent>() {
             @Override 
@@ -79,15 +79,12 @@ public class OpenSave {
                
                 Image tempImage = p.iView.getImage();
                 
-                p.globalGC.clearRect(0, 0, p.CANVAS_WIDTH, p.CANVAS_HEIGHT);
+                PaintCanvas.globalGC.clearRect(0, 0, p.CANVAS_WIDTH, p.CANVAS_HEIGHT);
                 
-                p.globalGC.fillRect(0,0,tempImage.getWidth(),tempImage.getHeight());
+                PaintCanvas.globalGC.fillRect(0,0,tempImage.getWidth(),tempImage.getHeight());
                 p.canvas.setWidth(tempImage.getWidth());
                 p.canvas.setHeight(tempImage.getHeight());
-                p.globalGC.drawImage(tempImage, 0, 0, tempImage.getWidth(), tempImage.getHeight());
-            
-                
-             
+                PaintCanvas.globalGC.drawImage(tempImage, 0, 0, tempImage.getWidth(), tempImage.getHeight());
                 System.out.println("Image opened successfully!");
             } catch (IOException ex) {
                 System.out.println("Error in opening");
@@ -113,11 +110,7 @@ public class OpenSave {
                 }  
                 
                 }else{                  
-//                    FileChooser.ExtensionFilter extJPG = new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.jpg");
-//                    FileChooser.ExtensionFilter extPNG = new FileChooser.ExtensionFilter("PNG files (*.png)", "*.png");
-//                    FileChooser.ExtensionFilter extGIF = new FileChooser.ExtensionFilter("GIF files (*.gif)", "*.gif");
-//                    fileChooser.getExtensionFilters().addAll(extPNG, extJPG, extGIF);
-                    p.outputFile = p.fileChooser.showSaveDialog(stage);
+                	p.outputFile = p.fileChooser.showSaveDialog(stage);
                     WritableImage writableImage = new WritableImage((int)p.canvas.getWidth(), (int)p.canvas.getHeight());
                     p.canvas.snapshot(null, writableImage);
 
@@ -129,8 +122,6 @@ public class OpenSave {
                             ImageIO.write(SwingFXUtils.fromFXImage(writableImage, null), saveFileExtension, p.outputFile);
                             System.out.println(">> SavefileExtension " + saveFileExtension);
                             }else{
-                              
-                               
                                 p.saveWarning(stage, ConfirmExit.display("WARNING", "WARNING:\nData loss can happen\nDo you want to save?"));
                                 System.out.println(">> SavefileExtension " + saveFileExtension);
                             }

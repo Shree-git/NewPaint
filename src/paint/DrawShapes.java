@@ -29,8 +29,6 @@ public class DrawShapes {
 	GraphicsContext graphicsContext;
 	Pane pane;
 	ImageView selectedImg;
-
-	Stack undoStack;
 	
 	public PencilTool pencil;
 	public EraserTool eraser;
@@ -51,11 +49,10 @@ public class DrawShapes {
 	public int endX;
 	public int endY;
 	
-	public DrawShapes(Canvas canvas, Pane pane, Stack undoStack) {
+	public DrawShapes(Canvas canvas, Pane pane) {
 		this.canvas = canvas;
 		this.graphicsContext = canvas.getGraphicsContext2D();
 		this.pane = pane;
-		this.undoStack = undoStack;
 		polyTool();
 	}
 	
@@ -182,7 +179,7 @@ public class DrawShapes {
 	                    circle.mouseRelease(e.getX());
 	                    pane.getChildren().remove(circle.ellipse); 
 	                }else if(EditTools.selectTool.isSelected()){
-	                    selectedImg = selectRect.mouseRelease(e.getX(), e.getY(), (Image)undoStack.peek());          
+	                    selectedImg = selectRect.mouseRelease(e.getX(), e.getY(), (Image)PainT.undoStack.peek());          
 	                    pane.getChildren().remove(selectRect.rect);
 	                }else if(EditTools.triangleTool.isSelected()){
 	                    triangle.mouseRelease(e.getX(), e.getY());
@@ -205,9 +202,10 @@ public class DrawShapes {
 	            }
 	            Image tempImage = canvas.snapshot(null, null );
 	            
-	            undoStack.push(tempImage);
+	            PainT.undoStack.push(tempImage);
 	            System.out.println("pushed");
 	            System.out.println("Mouse Released");
+	            System.out.println(PainT.undoStack.peek());
 	        });
 
 	    }

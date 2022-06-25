@@ -5,18 +5,10 @@
  */
 package paint;
 
-import java.awt.Desktop;
 import javafx.scene.image.Image;
-import java.awt.image.BufferedImage;
-import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.IOException;
-import java.nio.IntBuffer;
 import java.util.Stack;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.logging.Handler;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -25,59 +17,24 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
-import javafx.embed.swing.SwingNode;
-import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.geometry.Orientation;
-import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
-import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
-import javafx.scene.control.ColorPicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.ScrollBar;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.SeparatorMenuItem;
-import javafx.scene.control.Slider;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToolBar;
 import javafx.scene.image.ImageView;
-import javafx.scene.image.PixelFormat;
-import javafx.scene.image.PixelReader;
-import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
-import javafx.scene.image.WritablePixelFormat;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Ellipse;
-import javafx.scene.shape.Line;
-import javafx.scene.shape.Polygon;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeType;
-import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.util.Pair;
 import javax.imageio.ImageIO;
-import java.util.concurrent.TimeUnit;
-import java.util.logging.FileHandler;
 
 /**
  *
@@ -110,15 +67,13 @@ public class PainT extends Application{
     public StackPane canvasPane = new StackPane();
     Thread autosave;
     OpenSave os;
-    CheckSelected cS;
 	public Canvas canvas;
-	public GraphicsContext globalGC;
-	public GraphicsContext graphicsContext;
+//	public GraphicsContext globalGC;
+//	public GraphicsContext graphicsContext;
 	public double CANVAS_WIDTH = 1100;
 	public double CANVAS_HEIGHT = 750;
 	private Canvas layer = new Canvas();
-	public Stack undoStack = new Stack();
-	public Stack redoStack = new Stack();
+	public static Stack undoStack = new Stack();
 	public boolean freeLineTrue = false;
 	public boolean lineTrue = false;
 	public boolean rectangleTrue = false;
@@ -133,6 +88,7 @@ public class PainT extends Application{
 	public String saveFileExtension;
 	public Log log = new Log();
 	public DrawShapes drawShapes;
+	public PaintCanvas paintCanvas;
 
     @Override
     public void start(Stage stage) throws IOException { 
@@ -154,12 +110,13 @@ public class PainT extends Application{
             e.consume();
             closeProgram(stage, ConfirmExit.display("PainT", "Do you want to save changes?"));
         });
-        cS = new CheckSelected(editTool);
-        canvasFunc();
+        
+        paintCanvas = new PaintCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
+        canvas = paintCanvas.canvas;
         
         pane = new Pane(canvas);
         
-        drawShapes = new DrawShapes(canvas, pane, undoStack);
+        drawShapes = new DrawShapes(canvas, pane);
         drawShapes.drawShape();
         
         editTool.autosaveBox.setOnAction(e->{
@@ -175,10 +132,7 @@ public class PainT extends Application{
        
         ObservableList<Double> canvasPoints = FXCollections.observableArrayList();
         canvasPoints.addAll(canvas.getWidth(), canvas.getHeight());
-                
-        textTool();
-
-        
+ 
         editTool.selectTool.setOnAction(e->{
             selectTrue = !selectTrue;      
         });
@@ -204,28 +158,6 @@ public class PainT extends Application{
     /**
      *
      */
-    public void textTool(){
-         editTool.textTool.setOnAction(e->{
-            editTool.toolInfo.setText("Text Tool selected");
-            canvas.setOnMouseClicked(point->{
-                Stage textStage = new Stage();
-                textStage.initModality(Modality.APPLICATION_MODAL);
-                textStage.setTitle("Set Text");
-                VBox setTextBox = new VBox();
-                Label infoLabel = new Label("Text:");
-                TextField editText = new TextField();
-                Button okay = new Button("Ok");
-                setTextBox.setAlignment(Pos.CENTER);
-                setTextBox.getChildren().addAll(infoLabel, editText, okay);      
-                okay.setOnAction(f->{graphicsContext.strokeText(editText.getText(), point.getX(), point.getY());textStage.close();});
-                
-                Scene textScene = new Scene(setTextBox, 300, 200);
-                textStage.setScene(textScene);
-                textStage.showAndWait();       
-            });
-        });
-    }
-    
     
     
     /**
@@ -243,136 +175,12 @@ public class PainT extends Application{
         });    
     }
     
-    //Canvas
-    public void canvasFunc(){
-        createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT); //Creates a canvas
-        
-        cS.checkTrue();
-        editTool.pencilTool.setOnAction((ActionEvent event) -> {
-        	System.out.println(event);
-            cS.checkTrue();
-        });
-        
-        editTool.lineTool.setOnAction((ActionEvent event)->{
-            cS.checkTrue();
-            
-            
-        });
-        editTool.rectangleTool.setOnAction((ActionEvent event)->{
-            cS.checkTrue();
-            
-        });
-        editTool.squareTool.setOnAction((ActionEvent event)->{
-            cS.checkTrue();
-            
-        });
-        editTool.ellipseTool.setOnAction((ActionEvent event)->{
-            cS.checkTrue();
-        });
-        editTool.circleTool.setOnAction((ActionEvent event)->{
-            cS.checkTrue();
-            
-        });
-        editTool.eraserTool.setOnAction((ActionEvent event)->{
-            cS.checkTrue();
-            
-        });
-        editTool.selectTool.setOnAction((ActionEvent event)->{
-            cS.checkTrue();
-            
-        });
-        editTool.moveTool.setOnAction((ActionEvent event)->{
-            cS.checkTrue();
-            
-        });
-        editTool.copyTool.setOnAction((ActionEvent event)->{
-            cS.checkTrue();
-            
-        });
-        editTool.triangleTool.setOnAction((ActionEvent event)->{
-            cS.checkTrue();
-            
-        });
-        editTool.polygonTool.setOnAction((ActionEvent event)->{
-            cS.checkTrue();
-            
-        });
-       Image tempImge = canvas.snapshot(null, null);
-            //Undo Stack
-            undoStack.push(tempImge); 
-            System.out.println("pushed");
-        
-        editTool.colorGrabberTool.setOnMouseClicked((MouseEvent event) ->{
-            editTool.toolInfo.setText("Color Grabber selected");
-            Image tempImage = canvas.snapshot(null, null);
-            PixelReader pR = tempImage.getPixelReader();
-            
-            canvas.setOnMouseClicked(e ->{
-                Color c = pR.getColor((int)e.getX(), (int)e.getY());
-                editTool.colorPicker.setValue(c);
-                canvas.setOnMouseClicked(null);
-            });  
-        });
-        
-        editTool.undoTool.setOnMouseClicked(e->{
-            redoStack.push(undoStack.pop());
-            Image tempImage = (Image)undoStack.peek();
-            graphicsContext.drawImage(tempImage, 0, 0, tempImage.getWidth(), tempImage.getHeight());
-            System.out.println("popped");
-        });
-        
-        editTool.redoTool.setOnMouseClicked(e->{
-            Image tempImage = (Image)redoStack.peek();
-            undoStack.push(redoStack.pop());
-            
-            graphicsContext.drawImage(tempImage, 0, 0, tempImage.getWidth(), tempImage.getHeight());
-            System.out.println("redone");
-        });
-    }
-
-    /**
-     * Takes in width and height and creates a canvas
-     * @param width Canvas's width
-     * @param height Canvas's height
-     */
-    //Canvas
-    public void createCanvas(double width, double height){
-        //Creates a canvas with certain width, height.
-        canvas = new Canvas();
-        canvas.setWidth(width);
-        canvas.setHeight(height);
-        globalGC = canvas.getGraphicsContext2D();
-        globalGC.setFill(Color.WHITE); //Fills the canvas with white color
-        //Draws the canvas
-        globalGC.fillRect(
-                0,              //x of the upper left corner
-                0,              //y of the upper left corner
-                width,    //width of the rectangle
-                height);  //height of the rectangle
-    }
-    
     public void sThread(){
         autosave.interrupt();
         autosave = new Autosave(10, PainT.this);
         autosave.start();
     }
-    
-    /**
-     *
-     */
-   
-   
-    /**
-     *
-     */
-    public void colorGrabber(){
-        
-    }
-    
-    
-    
-  
-    
+ 
     // @return a list of anchors which can be dragged around to modify points in the format [x1, y1, x2, y2...]
 
     /**
@@ -434,6 +242,7 @@ public class PainT extends Application{
           dragDelta.x = getCenterX() - mouseEvent.getX();
           dragDelta.y = getCenterY() - mouseEvent.getY();
           getScene().setCursor(Cursor.MOVE);
+          System.out.println("dragDelta x: " + dragDelta.x + "dragDelta y: " + dragDelta.y);
         }
       });
       setOnMouseReleased(new EventHandler<MouseEvent>() {
@@ -443,23 +252,38 @@ public class PainT extends Application{
       });
       setOnMouseDragged(new EventHandler<MouseEvent>() {
         @Override public void handle(MouseEvent mouseEvent) {
+        	 
+
           double newX = mouseEvent.getX() + dragDelta.x;
-          canvas.setWidth(newX);
+          double newY = mouseEvent.getY() + dragDelta.y;
+          
+          canvas.getGraphicsContext2D().setFill(Color.WHITE); //Fills the canvas with white color
+          //Draws the canvas
+          canvas.getGraphicsContext2D().fillRect(
+         		 canvas.getWidth(),    //width of the rectangle
+         		 canvas.getHeight(),
+         		 mouseEvent.getX(),
+         		 mouseEvent.getY() //y of the upper left corner
+                  );  //height of the rectangle
+//          canvas.getGraphicsContext2D().fillRect(
+//          		 0,    //width of the rectangle
+//          		 0,
+//          		 1280,
+//          		 800 //y of the upper left corner
+//                   );  //height of the rectangle
+          System.out.println("canvas width: " + canvas.getWidth() + "canvas height: " + canvas.getHeight());
+          
           if (newX > 0 && newX < getScene().getWidth()) {
             setCenterX(newX);
           }
-          double newY = mouseEvent.getY() + dragDelta.y;
-          canvas.setHeight(newY);
           if (newY > 0 && newY < getScene().getHeight()) {
-            setCenterY(newY);
+        	  setCenterY(newY);
           }
-//          globalGC.setFill(Color.WHITE); //Fills the canvas with white color
-//          //Draws the canvas
-//          globalGC.fillRect(
-//        		  getCenterX(),              //x of the upper left corner
-//        		  getCenterY(),              //y of the upper left corner
-//                  newX,    //width of the rectangle
-//                  newY);  //height of the rectangle
+          canvas.setWidth(newX);
+          canvas.setHeight(newY);
+          System.out.println("new x: " + newX + "new y: " + newY);         
+          System.out.println("mouse x: " + mouseEvent.getX() + "mouse y: " + mouseEvent.getY());         
+       
         }
       });
       setOnMouseEntered(new EventHandler<MouseEvent>() {
@@ -467,6 +291,7 @@ public class PainT extends Application{
           if (!mouseEvent.isPrimaryButtonDown()) {
             getScene().setCursor(Cursor.HAND);
           }
+          System.out.println("enter x: " + mouseEvent.getX() + "enter y: " + mouseEvent.getY());
         }
       });
       setOnMouseExited(new EventHandler<MouseEvent>() {
@@ -544,22 +369,15 @@ public class PainT extends Application{
         String answer = display;
         switch(answer){
             case "save":
-                              
-                    
                     WritableImage writableImage = new WritableImage((int)canvas.getWidth(), (int)canvas.getHeight());
                     canvas.snapshot(null, writableImage);
 
                     try {
-
-
-                           ImageIO.write(SwingFXUtils.fromFXImage(writableImage, null), saveFileExtension, outputFile);
-                            
-
+                       ImageIO.write(SwingFXUtils.fromFXImage(writableImage, null), saveFileExtension, outputFile);      
                     } catch (IOException ex) {
-                        System.out.println("Error in saving as");
+                       System.out.println("Error in saving as");
                     }
-                    
-                
+
 //                stage.close();
                 break;
             case "dontSave":

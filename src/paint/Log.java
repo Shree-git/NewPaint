@@ -30,8 +30,8 @@ public class Log {
     *
     * @param selectedTool = Tool that's selected
     */
-   public static void tLogS(String selectedTool, CheckSelected cS){
-       Thread logSelection = new Thread(new Log().new LogSelection(selectedTool, cS));
+   public static void tLogS(String selectedTool){
+       Thread logSelection = new Thread(new Log().new LogSelection(selectedTool));
        logSelection.setDaemon(true);
        logSelection.start();
    }
@@ -104,16 +104,14 @@ public class Log {
 	
 	public class LogSelection implements Runnable{
 	    String toolLabel;
-	    CheckSelected cS;
-	    public LogSelection(String toolLabel, CheckSelected cS){
+	    public LogSelection(String toolLabel){
 	        this.toolLabel = toolLabel;
-	        this.cS = cS;
 	    }
 
 	    @Override
 	    public void run() {
 	        long startTimer = System.currentTimeMillis();
-	        while(cS.selectedTool.equals(toolLabel)){
+	        while(PaintCanvas.selectedToolText.equals(toolLabel)){
 	            try{
 	                Thread.sleep(100);
 	            } catch (InterruptedException ex) {

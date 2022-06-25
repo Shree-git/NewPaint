@@ -36,17 +36,17 @@ import javafx.scene.text.TextAlignment;
  */
 public class EditTools {
     //EditTools
-    public TextField widthEdit;
+    public static TextField widthEdit;
     public static int lineWidth = 5;
-    public Label strokeLabel;
-    public Label fillLabel;
+    public static Label strokeLabel;
+    public static Label fillLabel;
     public static ColorPicker colorPicker;
     public static ColorPicker fillPicker;
-    public Label sliderLabel;
+    public static Label sliderLabel;
     public static Slider slider;
-    public int s_MinValue = 1, s_MaxValue = 10;
+    public static int s_MinValue = 1, s_MaxValue = 10;
     public static ToolBar drawTools = new ToolBar();
-    public HBox editToolsBox = new HBox(10);
+    public static HBox editToolsBox = new HBox(10);
     
     public static ToggleButton pencilTool;
     public static ToggleButton lineTool;
@@ -57,23 +57,23 @@ public class EditTools {
     public static ToggleButton triangleTool;
     public static ToggleButton polygonTool;
     public static ToggleButton colorGrabberTool;
-    public Button undoTool;
-    public Button redoTool;
+    public static Button undoTool;
+    public static Button redoTool;
     public static ToggleButton eraserTool;
     public static ToggleButton textTool;
     public static ToolBar infoBar = new ToolBar();
-    public Text toolInfo = new Text();
+    public static Text toolInfo = new Text();
     public static ToggleButton selectTool;
     public static ToggleButton moveTool;
     public static ToggleButton copyTool;
-    ToggleButton[] toggleButtons;
+    public static ToggleButton[] toggleButtons;
     public static ToggleGroup toggleGroup = new ToggleGroup();
-    public Button zoomIn, zoomOut;
-    public CheckBox autosaveBox;
+    public static Button zoomIn, zoomOut;
+    public static CheckBox autosaveBox;
     public static ToggleButton emojiTool;
     public static ComboBox emojiList;
     
-    public GridPane toolsGrid = new GridPane();
+    public static GridPane toolsGrid = new GridPane();
     //EditTools
     
     public void editTool(){
