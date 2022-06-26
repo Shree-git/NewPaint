@@ -73,7 +73,7 @@ public class PainT extends Application{
 	public double CANVAS_WIDTH = 1100;
 	public double CANVAS_HEIGHT = 750;
 	private Canvas layer = new Canvas();
-	public static Stack undoStack = new Stack();
+	public static Stack<Image> undoStack = new Stack<Image>();
 	public boolean freeLineTrue = false;
 	public boolean lineTrue = false;
 	public boolean rectangleTrue = false;

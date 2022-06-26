@@ -25,7 +25,7 @@ public class PaintCanvas {
 	public static GraphicsContext globalGC;
 	public static GraphicsContext graphicsContext;
 	
-	public Stack redoStack = new Stack();
+	public Stack<Image> redoStack = new Stack<Image>();
 	
 	public PaintCanvas(double width, double height) {
 		createCanvas(width, height);
