@@ -44,16 +44,15 @@ public class PainT extends Application {
   // ScrollBar
   private ScrollPane scroll = new ScrollPane();
   public EditTools editTool = new EditTools();
-  public StackPane canvasPane = new StackPane();
+  public static StackPane canvasPane = new StackPane();
   OpenSave os;
   public Canvas canvas;
   // public GraphicsContext globalGC;
   // public GraphicsContext graphicsContext;
   public double CANVAS_WIDTH = 1100;
   public double CANVAS_HEIGHT = 750;
-  private Canvas layer = new Canvas();
   public static Stack<Image> undoStack = new Stack<Image>();
-  public Pane pane;
+  public static Pane pane;
   public String saveFileExtension;
   public Log log = new Log();
   public DrawShapes drawShapes;
@@ -85,12 +84,14 @@ public class PainT extends Application {
 
     pane = new Pane(canvas);
 
+    pane.setMinSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+    pane.setPrefSize(canvas.getWidth(), canvas.getHeight());
+
     drawShapes = new DrawShapes(canvas, pane);
     drawShapes.drawShape();
-
     canvasPane.setMargin(canvas, new Insets(20, 20, 20, 20));
+    canvasPane.setStyle("-fx-background-color: black;");
     canvasPane.getChildren().add(pane);
-
     buildStage(stage, scene);
   }
 

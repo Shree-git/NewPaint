@@ -1,16 +1,21 @@
 package paint;
 
-import java.util.Stack;
-
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.PixelReader;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Ellipse;
-import javafx.scene.shape.Polygon;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import tools.CircleTool;
 import tools.CopyTool;
 import tools.EllipseTool;
@@ -40,7 +45,6 @@ public class DrawShapes {
 	public TriangleTool triangle;
 	public PolygonTool polygonTool;
 	public LineTool line;
-
 	public MoveTool moveTool;
 	public CopyTool copyTool;
 
@@ -118,6 +122,31 @@ public class DrawShapes {
 				ImageView emoView = (ImageView) EditTools.emojiList.getValue();
 				Image emo = emoView.getImage();
 				graphicsContext.drawImage(emo, e.getX(), e.getY(), 50, 50);
+			} else if (EditTools.colorGrabberTool.isSelected()) {
+				Image tempImage = canvas.snapshot(null, null);
+				PixelReader pR = tempImage.getPixelReader();
+
+				Color c = pR.getColor((int) e.getX(), (int) e.getY());
+				EditTools.colorPicker.setValue(c);
+				canvas.setOnMouseClicked(null);
+			} else if (EditTools.textTool.isSelected()) {
+				Stage textStage = new Stage();
+				textStage.initModality(Modality.APPLICATION_MODAL);
+				textStage.setTitle("Set Text");
+				VBox setTextBox = new VBox();
+				Label infoLabel = new Label("Text:");
+				TextField editText = new TextField();
+				Button okay = new Button("Ok");
+				setTextBox.setAlignment(Pos.CENTER);
+				setTextBox.getChildren().addAll(infoLabel, editText, okay);
+				okay.setOnAction(f -> {
+					canvas.getGraphicsContext2D().strokeText(editText.getText(), e.getX(), e.getY());
+					textStage.close();
+				});
+
+				Scene textScene = new Scene(setTextBox, 300, 200);
+				textStage.setScene(textScene);
+				textStage.showAndWait();
 			}
 
 		});

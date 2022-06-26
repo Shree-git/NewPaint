@@ -13,8 +13,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -102,29 +104,20 @@ public class PaintCanvas {
             checkSelectedTool("Polygon Tool Selected");
 
         });
+        EditTools.colorGrabberTool.setOnAction((ActionEvent event) -> {
+            checkSelectedTool("Color Grabber Tool Selected");
+        });
+        EditTools.emojiTool.setOnAction((ActionEvent event) -> {
+            checkSelectedTool("Emoji Tool Selected");
+        });
         EditTools.zoomIn.setOnAction(e -> {
-            canvas.setScaleX(canvas.getScaleX() * 2);
-            canvas.setScaleY(canvas.getScaleY() * 2);
+            PainT.pane.setScaleX(PainT.pane.getScaleX() * 2);
+            PainT.pane.setScaleY(PainT.pane.getScaleY() * 2);
         });
 
         EditTools.zoomOut.setOnAction(e -> {
-            canvas.setScaleX(canvas.getScaleX() / 2);
-            canvas.setScaleY(canvas.getScaleY() / 2);
-        });
-        Image tempImge = canvas.snapshot(null, null);
-        // Undo Stack
-        PainT.undoStack.push(tempImge);
-
-        EditTools.colorGrabberTool.setOnMouseClicked((MouseEvent event) -> {
-            checkSelectedTool("Color Grabber Tool Selected");
-            Image tempImage = canvas.snapshot(null, null);
-            PixelReader pR = tempImage.getPixelReader();
-
-            canvas.setOnMouseClicked(e -> {
-                Color c = pR.getColor((int) e.getX(), (int) e.getY());
-                EditTools.colorPicker.setValue(c);
-                canvas.setOnMouseClicked(null);
-            });
+            PainT.pane.setScaleX(PainT.pane.getScaleX() / 2);
+            PainT.pane.setScaleY(PainT.pane.getScaleY() / 2);
         });
 
         EditTools.undoTool.setOnMouseClicked(e -> {
@@ -144,32 +137,21 @@ public class PaintCanvas {
 
         EditTools.textTool.setOnAction(e -> {
             checkSelectedTool("Text Tool selected");
-            canvas.setOnMouseClicked(point -> {
-                Stage textStage = new Stage();
-                textStage.initModality(Modality.APPLICATION_MODAL);
-                textStage.setTitle("Set Text");
-                VBox setTextBox = new VBox();
-                Label infoLabel = new Label("Text:");
-                TextField editText = new TextField();
-                Button okay = new Button("Ok");
-                setTextBox.setAlignment(Pos.CENTER);
-                setTextBox.getChildren().addAll(infoLabel, editText, okay);
-                okay.setOnAction(f -> {
-                    canvas.getGraphicsContext2D().strokeText(editText.getText(), point.getX(), point.getY());
-                    textStage.close();
-                });
-
-                Scene textScene = new Scene(setTextBox, 300, 200);
-                textStage.setScene(textScene);
-                textStage.showAndWait();
-            });
         });
+
+        Image tempImge = canvas.snapshot(null, null);
+        // Undo Stack
+        PainT.undoStack.push(tempImge);
 
     }
 
-    public void checkSelectedTool(String selectedToolTxt) {
-        selectedToolText = selectedToolTxt;
-        EditTools.toolInfo.setText(selectedToolTxt);
-        Log.tLogS(selectedToolTxt);
+    public static void checkSelectedTool(String selectedToolTxt) {
+        if (EditTools.toggleGroup.getSelectedToggle() == null) {
+            selectedToolText = "No Tool Selected";
+        } else {
+            selectedToolText = selectedToolTxt;
+        }
+        EditTools.toolInfo.setText(selectedToolText);
+        Log.tLogS(selectedToolText);
     }
 }
