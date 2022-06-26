@@ -1,7 +1,22 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <classpath>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
-	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JavaFX"/>
-	<classpathentry kind="output" path="bin"/>
+  <classpathentry kind="src" path="src"/>
+  <classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JavaFX"/>
+  <classpathentry kind="output" path="bin"/>
+  <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
+    <attributes/>
+    <accessrules>
+      <accessrule kind="accessible" pattern="javafx/**"/>
+      <accessrule kind="accessible" pattern="com/sun/javafx/**"/>
+    </accessrules>
+  </classpathentry>
+  <classpathentry exported="true" kind="lib" path="/Users/shree/Desktop/javafx-sdk-18.0.12/lib/javafx-swt.jar"/>
+  <classpathentry exported="true" kind="lib" path="/Users/shree/Desktop/javafx-sdk-18.0.12/lib/javafx.base.jar"/>
+  <classpathentry exported="true" kind="lib" path="/Users/shree/Desktop/javafx-sdk-18.0.12/lib/javafx.controls.jar"/>
+  <classpathentry exported="true" kind="lib" path="/Users/shree/Desktop/javafx-sdk-18.0.12/lib/javafx.fxml.jar"/>
+  <classpathentry exported="true" kind="lib" path="/Users/shree/Desktop/javafx-sdk-18.0.12/lib/javafx.graphics.jar"/>
+  <classpathentry exported="true" kind="lib" path="/Users/shree/Desktop/javafx-sdk-18.0.12/lib/javafx.media.jar"/>
+  <classpathentry exported="true" kind="lib" path="/Users/shree/Desktop/javafx-sdk-18.0.12/lib/javafx.swing.jar"/>
+  <classpathentry exported="true" kind="lib" path="/Users/shree/Desktop/javafx-sdk-18.0.12/lib/javafx.web.jar"/>
+
 </classpath>
